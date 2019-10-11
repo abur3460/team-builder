@@ -1,22 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import "../App.css";
 import { Button, Form, FormGroup, Label, Input, FormText } from "reactstrap";
 
 const MemberForm = ({
-    teamMember,
-    handleChange,
-    handleSubmit,
-    renderMember
+    addMember,
+    renderMember,
+    
 }) => {
+    const [form, setForm ] = useState({
+        name:'',
+        email:'',  
+        role:''
+    });
+    const handleChange = e => {
+        setForm({ ...form, [e.target.name]: e.target.value });
+    };
+    const handleSubmit = e => {
+        e.preventDefault();
+        addMember(form);
+    };
     return (
-        <Form onSubmit={e => handleSubmit(e)}>
+        <Form onSubmit={handleSubmit}>
             <FormGroup>
                 <Label for="name">Name: </Label>
                 <Input
                     type="text"
                     name="name"
-                    value={teamMember.name}
-                    onChange={e => handleChange(e)}
+                    value={form.name}
+                    onChange={handleChange}
                 />
             </FormGroup>
             <FormGroup>
@@ -24,8 +35,8 @@ const MemberForm = ({
                 <Input
                     type="email"
                     name="email"
-                    value={teamMember.email}
-                    onChange={e => handleChange(e)}
+                    value={form.email}
+                    onChange={handleChange}
                 />
             </FormGroup>
             <FormGroup>
@@ -33,8 +44,8 @@ const MemberForm = ({
                 <Input
                     type="text"
                     name="role"
-                    value={teamMember.role}
-                    onChange={e => handleChange(e)}
+                    value={form.role}
+                    onChange={handleChange}
                 />
             </FormGroup>
             <Button type="submit" className="btn" onClick={renderMember}>Submit
